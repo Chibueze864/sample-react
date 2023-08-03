@@ -5,22 +5,30 @@ import './App.css';
 const App = () => {
   const publicKey = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY;
   const amount = 1000000;
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [info, setInfo] =  useState({
+    email: "",
+    name: "",
+    phone: ""
+  })
+ const updateName = (e) => {
+    setInfo({ ...info, name: e.target.value });
+ };
+const updateEmail = (e) => {
+  setInfo({ ...info, email: e.target.value });
+};
+const updatePhone = (e) => {
+  setInfo({ ...info, phone: e.target.value });
+};
 
   const resetForm = () => {
-    setEmail('');
-    setName('');
-    setPhone('');
-  };
-
+    setInfo( { email: "",name: "",phone: ""});
+  }
   const componentProps = {
-    email,
+    info.email,
     amount,
     metadata: {
-      name,
-      phone,
+     info.name,
+      info.phone,
     },
     publicKey,
     text: 'Buy Now',
@@ -55,8 +63,8 @@ const App = () => {
               <input
                 type="text"
                 id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={info.name}
+                onChange={updateName}
               />
             </div>
             <div className="checkout-field">
@@ -64,8 +72,8 @@ const App = () => {
               <input
                 type="text"
                 id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={info.email}
+                onChange={updateEmail}
               />
             </div>
             <div className="checkout-field">
@@ -73,8 +81,8 @@ const App = () => {
               <input
                 type="text"
                 id="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={info.phone}
+                onChange={updatePhone}
               />
             </div>
             <PaystackButton className="paystack-button" {...componentProps} />
